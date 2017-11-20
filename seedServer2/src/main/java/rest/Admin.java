@@ -116,31 +116,28 @@ public class Admin {
         return new Gson().toJson(user);
     }
 //  
-//     @PUT
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    @Produces(MediaType.APPLICATION_JSON)
-//     public String editUser(String content){
-//     JsonObject body = new JsonParser().parse(content).getAsJsonObject();
-//     User user = uf.editUser(body.get("id").getAsLong());
-//       if(body.has("userName"))
-//        {
-//            user.setUserName(body.get("firstName").getAsString());
-//        }
-//        if(body.has("password"))
-//        {
-//            user.setPassword(body.get("password").getAsString());
-//        }
-//        if(body.has("phoneNumber"))
-//        {
-//            p.setPhoneNumber(body.get("phoneNumber").getAsInt());
-//        }       
-//
-//        fp.editPerson(p);
-//        
-//        return new Gson().toJson(p);
-//         
-//         return null;
-//     
-//     }
+     @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+     public String editUser(String content) throws PasswordStorage.CannotPerformOperationException{
+     JsonObject body = new JsonParser().parse(content).getAsJsonObject();
+     User user = uf.editUser(body.get("USER_NAME").getAsString());
+       if(body.has("userName"))
+        {
+           user.setUserName(body.get("userName").getAsString());
+           //user.setUserName(body.get("firstName").getAsString());
+        }
+        if(body.has("password"))
+        {
+            user.setPassword(body.get("password").getAsString());
+        }
+       
+        uf.editUser(user);
+        
+        return new Gson().toJson(user);
+         
+         
+     
+     }
     
 }
