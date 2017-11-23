@@ -84,6 +84,7 @@ public class LocationFacade implements ILocationfacade{
             em.remove(location);
             em.getTransaction().commit();
             return location;
+            
         } finally {
             em.close();
         }
@@ -94,7 +95,8 @@ public class LocationFacade implements ILocationfacade{
         EntityManager em = emf.createEntityManager();
 
         try {
-            return em.createNamedQuery("Location.findAll").getResultList();
+            List l = em.createNamedQuery("Location.findAll").getResultList();
+            return l;
         } finally {
             em.close();
         }

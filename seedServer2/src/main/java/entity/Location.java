@@ -7,9 +7,12 @@ package entity;
 
 import java.io.Serializable;
 import java.util.Collection;
+import javax.annotation.Generated;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -39,9 +42,10 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Location implements Serializable {
 
     private static final long serialVersionUID = 1L;
+   
     @Id
-    @Basic(optional = false)
-    @NotNull
+    
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
      
     @Column(name = "idlocation")
     private Integer idlocation;

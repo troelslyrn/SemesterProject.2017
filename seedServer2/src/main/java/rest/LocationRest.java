@@ -196,8 +196,10 @@ public class LocationRest {
     @Produces(MediaType.APPLICATION_JSON)
     public String getAllLocations(){
       List<Location> locations = lf.getallLocations();
-        return gson.toJson(new LocationMapper(locations,true));
+       // return gson.toJson(new LocationMapper(locations,true));
+       return gson.toJson(locations);
      
+       
      }
 
 }
