@@ -23,7 +23,9 @@ import entity.User;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.PUT;
+import mapper.UserMapper;
 import security.PasswordStorage;
 
 @Path("demoadmin")
@@ -41,6 +43,19 @@ public class Admin {
         gson = new Gson();
     }
     
+//    public static void main(String[] args) throws PasswordStorage.CannotPerformOperationException {
+//        User user = null;
+//        user = new User("troels", "123"); //User deleteUser = uf.deleteUser("Troels");
+//       EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu_development");
+//        UserFacade uf = new UserFacade(emf);
+//      
+//       
+//        uf.addUser(user);
+//       
+//
+//    }
+    
+    
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getSomething() {
@@ -52,36 +67,37 @@ public class Admin {
     @Path("addUser")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-//  @Consumes(MediaType.APPLICATION_JSON)
-    public String addUser(String content) throws PasswordStorage.CannotPerformOperationException {
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String addUser(String content)  {
         JsonObject body = new JsonParser().parse(content).getAsJsonObject();
-        System.out.println("ddededuoguyguyuguygyuygu");
+//        System.out.println("ddededuoguyguyuguygyuygu");
         String userName = "";
         String password = "";
-//    String userRole ="";
+        String userRole ="";
         if (body.has("userName")) {
             userName = body.get("userName").getAsString();
         }
         if (body.has("password")) {
             password = body.get("password").getAsString();
         }
-
-//     if (body.has("userRole"))
-//     {
-//         userRole= body.get("userRole").getAsString();
-//     }
-//     User user = null;
-//        try {
-//            user = new User(userName, password);
-//        } catch (PasswordStorage.CannotPerformOperationException ex) {
-//            ex.printStackTrace();
-//        }
-//     uf.addUser(user);
-//   return new Gson().toJson(user);
-        User user = new User(userName, password);
-        user.addRole(uf.getRole("User"));
+//
+////     if (body.has("userRole"))
+////     {
+////         userRole= body.get("userRole").getAsString();
+////     }
+        User user = null;
+        try {
+            user = new User(userName, password);
+        } catch (PasswordStorage.CannotPerformOperationException ex) {
+            ex.printStackTrace();
+        }
+        //uf.addUser(user);
+////   return new Gson().toJson(user);
+//        User user = new User(userName, password);
+//        user.addRole(uf.getRole("User"));
         uf.addUser(user);
         return new Gson().toJson(user);
+//        return content;
     }
     
     @Path("all")
@@ -115,16 +131,17 @@ public class Admin {
         
         return new Gson().toJson(user);
     }
-//  
-     @PUT
+//  lam@cphbusiness.dk
+//     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
      public String editUser(String content) throws PasswordStorage.CannotPerformOperationException{
-     JsonObject body = new JsonParser().parse(content).getAsJsonObject();
-     User user = uf.editUser(body.get("USER_NAME").getAsString());
+     UserMapper user = gson.fromJson(content, UserMapper.class);
+      JsonObject body = new JsonParser().parse(content).getAsJsonObject();
+// UserMapper user = uf.editUser();
        if(body.has("userName"))
         {
-           user.setUserName(body.get("userName").getAsString());
+           user.setUsername(body.get("userName").getAsString());
            //user.setUserName(body.get("firstName").getAsString());
         }
         if(body.has("password"))

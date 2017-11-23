@@ -4,6 +4,7 @@ import entity.User;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import mapper.UserMapper;
 
 /**
  *
@@ -22,5 +23,5 @@ public interface IUserFacade {
   public User deleteUser (String userName);
  // public User getUser (int id);
   public List<User> getAllUsers();
-  public User editUser(User user);
+  public User editUser(UserMapper user);
 }

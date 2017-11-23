@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.NotAuthorizedException;
 import javax.ws.rs.core.Response;
+import mapper.UserMapper;
 import security.IUser;
 import security.PasswordStorage;
 
@@ -109,14 +110,19 @@ public class UserFacade implements IUserFacade {
     }
 //skal laves færdig morther fucker !!!
     @Override
-    public User editUser(User user) {
+    public User editUser(UserMapper user) {
         EntityManager em = emf.createEntityManager();
 
         try {
             em.getTransaction().begin();
-            User u = em.find(User.class, user.getUserName());
-            if (user != null) {
-                u = user;
+            User u = em.find(User.class, user.username);
+            if (u != null) {
+                try {
+                    u.setPassword(user.password);
+                } catch (PasswordStorage.CannotPerformOperationException ex) {
+                    Logger.getLogger(UserFacade.class.getName()).log(Level.SEVERE, null, ex);
+                }
+               //u.setUserName(user.username);
                 em.merge(u);
                 em.getTransaction().commit();
                 return u;

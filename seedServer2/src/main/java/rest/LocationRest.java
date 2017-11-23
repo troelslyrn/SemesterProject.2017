@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -10,6 +10,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import deploy.DeploymentConfiguration;
+import entity.Cities;
 import entity.Location;
 import facades.LocationFacade;
 import java.util.List;
@@ -25,6 +26,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
+import mapper.LocationMapper;
 
 /**
  * REST Web Service
@@ -37,7 +39,7 @@ public class LocationRest {
     private LocationFacade lf;
     private Gson gson;
     Location location = new Location();
-
+    Cities city = new Cities();
     @Context
     private UriInfo context;
 
@@ -71,17 +73,66 @@ public class LocationRest {
     public void putXml(String content) {
     }
 
-    @Path("AddLocation")
+//    @Path("AddLocation")
+//    @POST
+//    @Produces(MediaType.APPLICATION_JSON)
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    public String addLocation(String content) {
+//    JsonObject body = new JsonParser().parse(content).getAsJsonObject();
+//         
+//        String street = "";
+//        String description = "";
+//        Integer housenr = null;
+//        Integer zip = null;
+//        byte[] img = null;
+//        Integer idlocation = null;
+//        Integer  idrating = null;
+//        String username ="";
+//                
+//        
+//        
+//        
+//       if (body.has("street")) {
+//            street = body.get("street").getAsString();
+//        }
+//       if (body.has("description")) {
+//            description = body.get("description").getAsString();
+//        }
+//       if (body.has("housenr")) {
+//            housenr = body.get("housenr").getAsInt();
+//        }
+//       if (body.has("zip")) {
+//            zip = body.get("zip").getAsInt();
+//        }
+////       if (body.has("img")) {
+////            img = body.get("img").getAsString();
+////       }
+//       Location location = null;
+//      
+//       location = new Location(idlocation, description, housenr, img, street, idrating, username, zip);
+//       
+//       
+//       
+//       //Location location = new Location ();
+//       lf.addLocation(location);
+//       return new Gson().toJson(location);
+//
+//    }
+    
+    
+        @Path("AddLocation")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public String addLocation(String content) {
         JsonObject body = new JsonParser().parse(content).getAsJsonObject();
 
         String street = "";
         String description = "";
-        //Integer.toBinaryString(housenr)= "";
-        Integer.toString(housenr) = "";
-        Integer.toString(zip)= "";
+        int housenr=0;
+        int zip=0;
+        
+        
        if (body.has("street")) {
             street = body.get("street").getAsString();
         }
@@ -94,11 +145,17 @@ public class LocationRest {
        if (body.has("zip")) {
             description = body.get("zip").getAsString();
         }
-       Location location = Location (street,description,housenr, zip);
-       lf.addLocation(location);
-       return new Gson().toJson(location);
+       Location l = new Location();
+       l.setDescription(description);
+       l.setHousenr(housenr);
+       l.setIdlocation(zip);
+       l.setStreet(street);
+       lf.addLocation(l);
+       return gson.toJson(l);
 
     }
+    
+    
   @DELETE
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{location}")
@@ -109,31 +166,38 @@ public class LocationRest {
         return new Gson().toJson(location);
     }
     
-    @Path("all")
+//    @Path("all")
+//    @GET
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public String getAllLocations(){
+//    {
+//        //return new Gson().toJson(uf.getUsers());
+//        List<Location> l = lf.getallLocations();
+//        JsonArray response = new JsonArray();
+//        for(Location location: l) {
+//            JsonObject jo = new JsonObject();
+//            jo.addProperty("Location", location.getIdlocation());
+//            JsonArray roles = new JsonArray();
+////            for(Role r: u.getRoles()) {
+////                JsonObject ro = new JsonObject();
+////                ro.addProperty("roleName", r.getRoleName());
+////                roles.add(ro);
+////            }
+////            jo.add("roles", roles);
+////            response.add(jo);
+//        }
+//        return new Gson().toJson(response);
+//    }
+//    
+//    }
+//    
+     @Path("all")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getAllLocations(){
-    {
-        //return new Gson().toJson(uf.getUsers());
-        List<Location> l = lf.getallLocations();
-        JsonArray response = new JsonArray();
-        for(Location location: l) {
-            JsonObject jo = new JsonObject();
-            jo.addProperty("location", location.getIdlocation());
-            JsonArray roles = new JsonArray();
-//            for(Role r: u.getRoles()) {
-//                JsonObject ro = new JsonObject();
-//                ro.addProperty("roleName", r.getRoleName());
-//                roles.add(ro);
-//            }
-//            jo.add("roles", roles);
-//            response.add(jo);
-        }
-        return new Gson().toJson(response);
-    }
-    
-    }
-    
-    
+      List<Location> locations = lf.getallLocations();
+        return gson.toJson(new LocationMapper(locations,true));
+     
+     }
 
 }

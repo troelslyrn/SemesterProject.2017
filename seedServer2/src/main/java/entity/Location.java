@@ -42,6 +42,7 @@ public class Location implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
+     
     @Column(name = "idlocation")
     private Integer idlocation;
     @Size(max = 1500)
@@ -70,10 +71,53 @@ public class Location implements Serializable {
     public Location() {
     }
 
+    public Location(Integer idlocation, String description, byte[] img, String street, Integer housenr, Collection<Rented> rentedCollection, Cities zip, Ratings idrating, Users username) {
+        this.idlocation = idlocation;
+        this.description = description;
+        this.img = img;
+        this.street = street;
+        this.housenr = housenr;
+        this.rentedCollection = rentedCollection;
+        this.zip = zip;
+        this.idrating = idrating;
+        this.username = username;
+    }
+
+    public Location(Integer idlocation, String description, byte[] img, String street, Integer housenr, Cities zip, Ratings idrating, Users username) {
+        this.idlocation = idlocation;
+        this.description = description;
+        this.img = img;
+        this.street = street;
+        this.housenr = housenr;
+        this.zip = zip;
+        this.idrating = idrating;
+        this.username = username;
+    }
+    
+    
+    
+    public Location(String description,String street, Integer housenr) {
+        this.description = description;
+        
+        this.street = street;
+        this.housenr = housenr;
+       
+    }
+
+    public Location(Integer idlocation, String description, byte[] img, String street, Integer housenr, Cities zip) {
+        this.idlocation = idlocation;
+        this.description = description;
+        this.img = img;
+        this.street = street;
+        this.housenr = housenr;
+        this.zip = zip;
+    }
+
     public Location(Integer idlocation) {
         this.idlocation = idlocation;
     }
 
+   
     public Integer getIdlocation() {
         return idlocation;
     }

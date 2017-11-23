@@ -17,7 +17,9 @@ import security.ILocationfacade;
  */
 public class LocationFacade implements ILocationfacade{
     EntityManagerFactory emf;
-
+     List<Location> location;
+    
+    
     public LocationFacade(EntityManagerFactory emf) {
         this.emf = emf;
     }
@@ -92,7 +94,7 @@ public class LocationFacade implements ILocationfacade{
         EntityManager em = emf.createEntityManager();
 
         try {
-            return em.createQuery("SELECT location FROM Location location").getResultList();
+            return em.createNamedQuery("Location.findAll").getResultList();
         } finally {
             em.close();
         }
