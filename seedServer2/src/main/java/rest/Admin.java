@@ -100,7 +100,7 @@ public class Admin {
 //        return content;
     }
     
-    @Path("all")
+        @Path("all")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getAllUsers() {
@@ -121,10 +121,22 @@ public class Admin {
         }
         return new Gson().toJson(response);
     }
+    
+    
+//    @Path("all")
+//    @GET
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public String getAllUsers() {
+//       List<User> users = uf.getAllUsers();
+//       return gson.toJson(users);
+//    }
+    
 
+    
+    @Path("delete")
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/{userName}")
+    
     public String deleteUser(@PathParam("userName") String userName) {
         
         User user = uf.deleteUser(userName);

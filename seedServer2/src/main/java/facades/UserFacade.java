@@ -102,12 +102,26 @@ public class UserFacade implements IUserFacade {
         EntityManager em = emf.createEntityManager();
 
         try {
-            return em.createQuery("SELECT user FROM User user").getResultList();
+            return em.createQuery("SELECT user FROM SEED_USER user").getResultList();
         } finally {
             em.close();
         }
 
     }
+    
+    
+//    @Override
+//    public List<User> getAllUsers() {
+//        EntityManager em = emf.createEntityManager();
+//
+//        try {
+//           List u= em.createNamedQuery("Users.findAll").getResultList();
+//           return u;
+//        } finally {
+//            em.close();
+//        }
+//
+//    }
 //skal laves færdig morther fucker !!!
     @Override
     public User editUser(UserMapper user) {

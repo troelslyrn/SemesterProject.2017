@@ -7,10 +7,19 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import security.IUser;
 import security.PasswordStorage;
 
 @Entity(name = "SEED_USER")
+//@NamedQueries({
+//    @NamedQuery(name = "SEED_USER.findAll", query = "SELECT u FROM Users u"),
+//    @NamedQuery(name = "SEED_USER.findById", query = "SELECT u FROM Users u WHERE u.id = :id"),
+//    @NamedQuery(name = "SEED_USER.findByUsername", query = "SELECT u FROM SEED_USER u WHERE u.username = :username"),
+//    @NamedQuery(name = "SEED_USER.findByPasswordHashed", query = "SELECT u FROM SEED_USER u WHERE u.passwordHashed = :passwordHashed")})
+
+
 public class User implements IUser, Serializable {
 
 //User user = new User();
