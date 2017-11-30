@@ -73,7 +73,10 @@ public class Admin {
 //        System.out.println("ddededuoguyguyuguygyuygu");
         String userName = "";
         String password = "";
-        String userRole ="";
+        
+       
+        User user = null;
+        //Role userRole = new Role("User");
         if (body.has("userName")) {
             userName = body.get("userName").getAsString();
         }
@@ -85,9 +88,10 @@ public class Admin {
 ////     {
 ////         userRole= body.get("userRole").getAsString();
 ////     }
-        User user = null;
+        
         try {
             user = new User(userName, password);
+           // user.addRole(userRole);
         } catch (PasswordStorage.CannotPerformOperationException ex) {
             ex.printStackTrace();
         }
@@ -95,7 +99,10 @@ public class Admin {
 ////   return new Gson().toJson(user);
 //        User user = new User(userName, password);
 //        user.addRole(uf.getRole("User"));
-        uf.addUser(user);
+  uf.addUser(user);
+
+//  uf.addUser(user); 
+//user.addRole(uf.getRole("User"));
         return new Gson().toJson(user);
 //        return content;
     }

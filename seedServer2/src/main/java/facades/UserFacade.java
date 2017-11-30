@@ -22,9 +22,9 @@ public class UserFacade implements IUserFacade {
         this.emf = emf;
     }
 
-    public EntityManager getEntityManager() {
+   public EntityManager getEntityManager() {
         return emf.createEntityManager();
-    }
+    } 
 
     @Override
     public IUser getUserByUserId(String id) {
@@ -62,11 +62,21 @@ public class UserFacade implements IUserFacade {
 
         try {
             em.getTransaction().begin();
-
+//            Role userRole = new Role("User");
+           Role userRole = em.find(Role.class, "user");
+           // System.out.println("role: "+userRole);
+//                         
+            //em.persist(userRole);
+           user.addRole(userRole);
             em.persist(user);
 
+              
+//                    Role userRole = new Role("User");
+//                    user.addRole(userRole);
+//                    em.persist(user);
+       
             em.getTransaction().commit();
-
+            
             return user;
         } finally {
             em.close();
