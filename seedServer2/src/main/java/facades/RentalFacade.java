@@ -70,7 +70,17 @@ public class RentalFacade {
         }
         
         
-        
+        public Rental getRental(int id){
+            EntityManager em = emf.createEntityManager();
+            
+            try{
+                Long idLong = new Long(id);
+                Rental rental = em.find(Rental.class, idLong);
+                return rental;
+            }finally {
+                em.close();
+            }
+        }
         
         public List<Rental> getAllRentals() {
             EntityManager em = emf.createEntityManager();

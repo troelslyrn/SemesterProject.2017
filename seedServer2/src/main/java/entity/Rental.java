@@ -50,10 +50,10 @@ public class Rental implements Serializable{
    private Integer rating;
    
    @Column(name = "latitude")
-   private Float latitude;
+   private double latitude;
    
    @Column(name = "longitude")
-   private Float longitude;
+   private double longitude;
    
    @Column(name = "userName")
    private String userName;
@@ -61,7 +61,7 @@ public class Rental implements Serializable{
     public Rental() {
     }
 
-    public Rental(Long id, String description, String city, String zip, String street, Integer streetNumber, Integer rating, Float latitude, Float longitude, String userName) {
+    public Rental(Long id, String description, String city, String zip, String street, Integer streetNumber, Integer rating, double latitude, double longitude, String userName) {
         this.id = id;
         this.description = description;
         this.city = city;
@@ -130,15 +130,15 @@ public class Rental implements Serializable{
         this.rating = rating;
     }
 
-    public Float getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(Float latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public Float getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
