@@ -18,13 +18,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "rental")
 @XmlRootElement
 
-public class Rental implements Serializable{
+public class Rental implements Serializable{    
+    
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-   @Column(name = "desctiption")
+   @Column(name = "description")
    @Size(max = 1200)
    private String description;
    
@@ -54,13 +56,12 @@ public class Rental implements Serializable{
    private Float longitude;
    
    @Column(name = "userName")
-   private Float userName;
+   private String userName;
 
     public Rental() {
     }
 
-    
-    public Rental(Long id, String description, String city, String zip, String street, Integer streetNumber, Integer rating, Float latitude, Float longitude, Float userName) {
+    public Rental(Long id, String description, String city, String zip, String street, Integer streetNumber, Integer rating, Float latitude, Float longitude, String userName) {
         this.id = id;
         this.description = description;
         this.city = city;
@@ -145,27 +146,27 @@ public class Rental implements Serializable{
         this.longitude = longitude;
     }
 
-    public Float getUserName() {
+    public String getUserName() {
         return userName;
     }
 
-    public void setUserName(Float userName) {
+    public void setUserName(String userName) {
         this.userName = userName;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 59 * hash + Objects.hashCode(this.id);
-        hash = 59 * hash + Objects.hashCode(this.description);
-        hash = 59 * hash + Objects.hashCode(this.city);
-        hash = 59 * hash + Objects.hashCode(this.zip);
-        hash = 59 * hash + Objects.hashCode(this.street);
-        hash = 59 * hash + Objects.hashCode(this.streetNumber);
-        hash = 59 * hash + Objects.hashCode(this.rating);
-        hash = 59 * hash + Objects.hashCode(this.latitude);
-        hash = 59 * hash + Objects.hashCode(this.longitude);
-        hash = 59 * hash + Objects.hashCode(this.userName);
+        int hash = 5;
+        hash = 83 * hash + Objects.hashCode(this.id);
+        hash = 83 * hash + Objects.hashCode(this.description);
+        hash = 83 * hash + Objects.hashCode(this.city);
+        hash = 83 * hash + Objects.hashCode(this.zip);
+        hash = 83 * hash + Objects.hashCode(this.street);
+        hash = 83 * hash + Objects.hashCode(this.streetNumber);
+        hash = 83 * hash + Objects.hashCode(this.rating);
+        hash = 83 * hash + Objects.hashCode(this.latitude);
+        hash = 83 * hash + Objects.hashCode(this.longitude);
+        hash = 83 * hash + Objects.hashCode(this.userName);
         return hash;
     }
 
@@ -193,6 +194,9 @@ public class Rental implements Serializable{
         if (!Objects.equals(this.street, other.street)) {
             return false;
         }
+        if (!Objects.equals(this.userName, other.userName)) {
+            return false;
+        }
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
@@ -208,9 +212,6 @@ public class Rental implements Serializable{
         if (!Objects.equals(this.longitude, other.longitude)) {
             return false;
         }
-        if (!Objects.equals(this.userName, other.userName)) {
-            return false;
-        }
         return true;
     }
 
@@ -218,9 +219,6 @@ public class Rental implements Serializable{
     public String toString() {
         return "Rental{" + "id=" + id + ", description=" + description + ", city=" + city + ", zip=" + zip + ", street=" + street + ", streetNumber=" + streetNumber + ", rating=" + rating + ", latitude=" + latitude + ", longitude=" + longitude + ", userName=" + userName + '}';
     }
-   
-   
-   
-   
+ 
     
 }
