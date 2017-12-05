@@ -6,12 +6,12 @@
 package rest;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import deploy.DeploymentConfiguration;
 import entity.Cities;
 import entity.Location;
+import facades.CityFacade;
 import facades.LocationFacade;
 import java.util.List;
 import javax.persistence.Persistence;
@@ -26,7 +26,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
-import mapper.LocationMapper;
 
 /**
  * REST Web Service
@@ -37,6 +36,7 @@ import mapper.LocationMapper;
 public class LocationRest {
 
     private LocationFacade lf;
+    private CityFacade cityFacade;
     private Gson gson;
     Location location = new Location();
     Cities city = new Cities();
@@ -48,6 +48,7 @@ public class LocationRest {
      */
     public LocationRest() {
         lf = new LocationFacade(Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME));
+        cityFacade = new CityFacade(Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME));
         gson = new Gson();
     }
 
@@ -129,10 +130,15 @@ public class LocationRest {
 
         String street = "";
         String description = "";
-        int housenr=0;
+        String city = "";
+        int housenr = 0;
         int zip=0;
         
         
+        
+       if (body.has("city")) {
+           city = body.get("city").getAsString();
+       } 
        if (body.has("street")) {
             street = body.get("street").getAsString();
         }
@@ -140,16 +146,21 @@ public class LocationRest {
             description = body.get("description").getAsString();
         }
        if (body.has("housenr")) {
-            description = body.get("housenr").getAsString();
+            housenr = body.get("housenr").getAsInt();
         }
        if (body.has("zip")) {
-            description = body.get("zip").getAsString();
+            zip = body.get("zip").getAsInt();
         }
+       
+       Cities newCity = new Cities();
+       newCity.setZip(zip);
+       newCity.setCity(city);
+       cityFacade.addCity(newCity);
        Location l = new Location();
        l.setDescription(description);
        l.setHousenr(housenr);
-       l.setIdlocation(zip);
        l.setStreet(street);
+       l.setZip(newCity);
        lf.addLocation(l);
        return gson.toJson(l);
 

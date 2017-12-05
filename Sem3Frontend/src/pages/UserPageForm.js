@@ -5,7 +5,7 @@ class UserPageForm extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        house: { description: "",housenr: null, img : "", street:"", idrating:"", username:"", zip:null}
+        house: { description: "",housenr: null, img : "", street:"", city:"", idrating:"", username:"", zip:null}
 
         
       };
@@ -20,12 +20,13 @@ class UserPageForm extends React.Component {
        fetch('http://localhost:8084/seedMaven2/api/LocationRest/AddLocation', {
          method : 'POST',
          
-         headers : {'Accept': 'application/json',"Content-Type" : "application/json"},
+         headers : {'Accept': 'application/json','Content-Type' : 'application/json'},
          body: JSON.stringify({ 
           "street" :  this.refs.streetRef.value,
           "description" : this.refs.descRef.value,
-            "housenr" : this.refs.housenr.value,
-           "zip" :  this.refs.zipRef.value
+           "housenr" : this.refs.housenr.value,
+          "zip" :  this.refs.zipRef.value,
+          "city" : this.refs.cityRef.value
          })
        })
 
@@ -43,6 +44,7 @@ class UserPageForm extends React.Component {
         this.refs.streetRef.value ="";
         this.refs.zipRef.value ="";
         this.refs.descRef.value ="";
+        this.refs.cityRef.value = "";
         
       }
   
@@ -69,6 +71,8 @@ class UserPageForm extends React.Component {
                      placeholder="House number"/>
                 <input ref = "streetRef" className="form-control" id="street" type="text"
                     placeholder="Street"/>
+                <input ref = "cityRef" className="form-control" id="city" type="text"
+                    placeholder="City"/>
                 <input ref = "zipRef" className="form-control" id="zip" type="number"
                     placeholder="Zipcode"/>
                 <textarea ref = "descRef" style={{height: 100}} className="form-control" id="description" 
