@@ -41,12 +41,13 @@ public class RentalRest {
          return gson.toJson(rentals);
    }
    
-   @Path("/id")
+   @Path("{id}")
    @GET
    @Consumes(MediaType.APPLICATION_JSON)
    @Produces(MediaType.APPLICATION_JSON)
    public String getRentalById(final @PathParam("id") int id){
        
+ 
        Rental rental = rentalFacade.getRental(id);
        return gson.toJson(rental);
     
